@@ -5,30 +5,36 @@ public class Usuarios {
     private String nom_usuario;
     private String ape_usuario;
     private String tipo;
+    private String telcasa;
     private String celular;
+    private String email;
     private String estado;
     private String clave;
-    private int accessosistemas;
+    private int acessosistemas;
     private int esadministrador;
 
-    public Usuarios(String carnet, String nom_usuario, String ape_usuario, String tipo, String celular, String estado, String clave, int accessosistemas, int esadministrador) {
+    public Usuarios(String carnet, String nom_usuario, String ape_usuario, String tipo, String telcasa, String celular, String email, String estado, String clave, int acessosistemas, int esadministrador) {
         this.carnet = carnet;
         this.nom_usuario = nom_usuario;
         this.ape_usuario = ape_usuario;
         this.tipo = tipo;
+        this.telcasa = telcasa;
         this.celular = celular;
+        this.email = email;
         this.estado = estado;
         this.clave = clave;
-        this.accessosistemas = accessosistemas;
+        this.acessosistemas = acessosistemas;
         this.esadministrador = esadministrador;
     }
 
-    public Usuarios(String carnet, String nom_usuario, String ape_usuario, String tipo, String celular, String estado, String clave, int esadministrador) {
+    public Usuarios(String carnet, String nom_usuario, String ape_usuario, String tipo, String telcasa, String celular, String email, String estado, String clave, int esadministrador) {
         this.carnet = carnet;
         this.nom_usuario = nom_usuario;
         this.ape_usuario = ape_usuario;
         this.tipo = tipo;
+        this.telcasa = telcasa;
         this.celular = celular;
+        this.email = email;
         this.estado = estado;
         this.clave = clave;
         this.esadministrador = esadministrador;
@@ -66,12 +72,28 @@ public class Usuarios {
         this.tipo = tipo;
     }
 
+    public String getTelcasa() {
+        return telcasa;
+    }
+
+    public void setTelcasa(String telcasa) {
+        this.telcasa = telcasa;
+    }
+
     public String getCelular() {
         return celular;
     }
 
     public void setCelular(String celular) {
         this.celular = celular;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getEstado() {
@@ -90,12 +112,12 @@ public class Usuarios {
         this.clave = clave;
     }
 
-    public int getAccessosistemas() {
-        return accessosistemas;
+    public int getAcessosistemas() {
+        return acessosistemas;
     }
 
-    public void setAccessosistemas(int accessosistemas) {
-        this.accessosistemas = accessosistemas;
+    public void setAcessosistemas(int acessosistemas) {
+        this.acessosistemas = acessosistemas;
     }
 
     public int getEsadministrador() {

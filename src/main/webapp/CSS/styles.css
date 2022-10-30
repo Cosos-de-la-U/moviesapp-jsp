@@ -1,0 +1,14 @@
+.barraflex{
+    width: 100%;
+    display: flex;
+    justify-content: space-between
+}
+
+.rotate-45 {
+    --transform-rotate: 45deg;
+    transform: rotate(45deg);
+}
+
+.group:hover .group-hover\:flex {
+    display: flex;
+}
