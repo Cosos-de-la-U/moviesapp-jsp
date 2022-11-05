@@ -2,6 +2,8 @@ package DAO;
 
 import Interfaces.iUsuarios;
 import Model.Usuarios;
+import helper.generateCarnet;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +15,7 @@ import java.util.List;
 import static DB.PostgresDriver.getConnection;
 import static DB.PostgresDriver.printSQLException;
 import static DB.Queries.qUsuarios.*;
+import static helper.generateCarnet.createCarnet;
 
 public class UsuariosDAO implements iUsuarios {
 
@@ -86,17 +89,21 @@ public class UsuariosDAO implements iUsuarios {
         System.out.println(INSERT_USUARIOS);
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USUARIOS);){
+
+            String nCarnet = createCarnet(usuarios.getNom_usuario(),  usuarios.getApe_usuario());
+            System.out.println(nCarnet + " "+ StringUtils.capitalize(usuarios.getEstado().strip()));
             //Preparing the query
-            preparedStatement.setString(1, usuarios.getNom_usuario());
-            preparedStatement.setString(2, usuarios.getApe_usuario());
-            preparedStatement.setString(3, usuarios.getTipo());
-            preparedStatement.setString(4, usuarios.getTelcasa());
-            preparedStatement.setString(5, usuarios.getCelular());
-            preparedStatement.setString(6, usuarios.getEmail());
-            preparedStatement.setString(7, usuarios.getEstado());
-            preparedStatement.setString(8, usuarios.getClave());
-            preparedStatement.setInt(9, usuarios.getAcessosistemas());
-            preparedStatement.setInt(10, usuarios.getEsadministrador());
+            preparedStatement.setString(1, nCarnet );
+            preparedStatement.setString(2, StringUtils.capitalize(usuarios.getNom_usuario().strip()));
+            preparedStatement.setString(3, StringUtils.capitalize( usuarios.getApe_usuario().strip()));
+            preparedStatement.setString(4, StringUtils.capitalize(usuarios.getTipo().strip()));
+            preparedStatement.setString(5, usuarios.getTelcasa().strip());
+            preparedStatement.setString(6, usuarios.getCelular().strip());
+            preparedStatement.setString(7, usuarios.getEmail().strip());
+            preparedStatement.setString(8, StringUtils.capitalize(usuarios.getEstado().strip()));
+            preparedStatement.setString(9, usuarios.getClave().strip());
+            preparedStatement.setInt(10, usuarios.getAcessosistemas());
+            preparedStatement.setInt(11, usuarios.getEsadministrador());
             //Execute statement
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
@@ -112,17 +119,17 @@ public class UsuariosDAO implements iUsuarios {
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USUARIOS);){
             System.out.println("Updated Categoria: " + preparedStatement);
             //Prepare query
-            preparedStatement.setString(1, usuarios.getNom_usuario());
-            preparedStatement.setString(2, usuarios.getApe_usuario());
-            preparedStatement.setString(3, usuarios.getTipo());
-            preparedStatement.setString(4, usuarios.getTelcasa());
-            preparedStatement.setString(5, usuarios.getCelular());
-            preparedStatement.setString(6, usuarios.getEmail());
-            preparedStatement.setString(7, usuarios.getEstado());
-            preparedStatement.setString(8, usuarios.getClave());
+            preparedStatement.setString(1, StringUtils.capitalize(usuarios.getNom_usuario().strip()));
+            preparedStatement.setString(2, StringUtils.capitalize( usuarios.getApe_usuario().strip()));
+            preparedStatement.setString(3, StringUtils.capitalize(usuarios.getTipo().strip()));
+            preparedStatement.setString(4, usuarios.getTelcasa().strip());
+            preparedStatement.setString(5, usuarios.getCelular().strip());
+            preparedStatement.setString(6, usuarios.getEmail().strip());
+            preparedStatement.setString(7, StringUtils.capitalize(usuarios.getEstado().strip()));
+            preparedStatement.setString(8, usuarios.getClave().strip());
             preparedStatement.setInt(9, usuarios.getAcessosistemas());
             preparedStatement.setInt(10, usuarios.getEsadministrador());
-            preparedStatement.setString(11, usuarios.getCarnet());
+            preparedStatement.setString(11, usuarios.getCarnet().strip());
             //Check is there is any changes
             rowUpdated = preparedStatement.executeUpdate() > 0;
         }
@@ -130,12 +137,12 @@ public class UsuariosDAO implements iUsuarios {
     }
 
     @Override
-    public boolean delete(Usuarios usuarios) throws SQLException{
+    public boolean delete(String carnet) throws SQLException{
         boolean rowDeleted;
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USUARIOS);){
             //Prepare query
-            preparedStatement.setString(1, usuarios.getCarnet());
+            preparedStatement.setString(1, carnet);
             //Check is there is any changes
             rowDeleted = preparedStatement.executeUpdate() > 0;
         }

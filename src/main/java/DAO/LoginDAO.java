@@ -2,6 +2,7 @@ package DAO;
 
 import Interfaces.iLogin;
 import Model.Usuarios;
+import Enum.TipoUsuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +21,7 @@ public class LoginDAO implements iLogin {
         try (Connection connection = getConnection();
              //Create statement using connection object
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USUARIOS_LOGIN);) {
-            preparedStatement.setString(1, carnetRequested);
+            preparedStatement.setString(1, carnetRequested.strip());//strip() to remove white-spaces at the beginning and end
             preparedStatement.setString(2, claveRequested);
             System.out.println(preparedStatement);
             //Execute query
@@ -36,7 +37,7 @@ public class LoginDAO implements iLogin {
                 String email = rs.getString("email");
                 String estado = rs.getString("estado");
                 String clave = rs.getString("clave");
-                int accessosistemas = rs.getInt("accessosistemas");
+                int accessosistemas = rs.getInt("acessosistemas");
                 int esadministrador = rs.getInt("esadministrador");
                 usuarioSession = new Usuarios(carnet, nom_usuario, ape_usuario, tipo, telcasa, celular, email, estado, clave, accessosistemas, esadministrador);
             }
@@ -44,6 +45,19 @@ public class LoginDAO implements iLogin {
             printSQLException(e);
         }
         return usuarioSession;
+    }
+
+    @Override
+    public TipoUsuario validate(Usuarios usuarioSession) {
+        if(usuarioSession.getAcessosistemas() == 1){
+            //Check if user is admin
+            if(usuarioSession.getEsadministrador() == 1){
+                return TipoUsuario.ADMIN;
+            }
+            //If is not is a normal user
+            return TipoUsuario.USUARIO;
+        }
+        return TipoUsuario.INHABILITADO;
     }
 
     @Override

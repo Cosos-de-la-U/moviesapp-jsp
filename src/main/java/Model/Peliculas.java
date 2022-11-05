@@ -15,11 +15,11 @@ public class Peliculas {
         this.duracion = duracion;
     }
 
-    public Peliculas(int idpelicula, String nombre, String nomb_ingles, int yearp) {
-        this.idpelicula = idpelicula;
+    public Peliculas(String nombre, String nomb_ingles, int yearp, int duracion) {
         this.nombre = nombre;
         this.nomb_ingles = nomb_ingles;
         this.yearp = yearp;
+        this.duracion = duracion;
     }
 
     public int getIdpelicula() {

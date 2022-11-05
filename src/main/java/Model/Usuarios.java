@@ -27,8 +27,7 @@ public class Usuarios {
         this.esadministrador = esadministrador;
     }
 
-    public Usuarios(String carnet, String nom_usuario, String ape_usuario, String tipo, String telcasa, String celular, String email, String estado, String clave, int esadministrador) {
-        this.carnet = carnet;
+    public Usuarios(String nom_usuario, String ape_usuario, String tipo, String telcasa, String celular, String email, String estado, String clave, int acessosistemas, int esadministrador) {
         this.nom_usuario = nom_usuario;
         this.ape_usuario = ape_usuario;
         this.tipo = tipo;
@@ -37,6 +36,7 @@ public class Usuarios {
         this.email = email;
         this.estado = estado;
         this.clave = clave;
+        this.acessosistemas = acessosistemas;
         this.esadministrador = esadministrador;
     }
 
