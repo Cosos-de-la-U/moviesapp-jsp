@@ -2,7 +2,6 @@ package DAO;
 
 import Interfaces.iUsuarios;
 import Model.Usuarios;
-import helper.generateCarnet;
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
@@ -15,12 +14,12 @@ import java.util.List;
 import static DB.PostgresDriver.getConnection;
 import static DB.PostgresDriver.printSQLException;
 import static DB.Queries.qUsuarios.*;
-import static helper.generateCarnet.createCarnet;
+import static Helpers.generateCarnet.createCarnet;
 
 public class UsuariosDAO implements iUsuarios {
 
     @Override
-    public Usuarios select(String carnetUser) {
+    public Usuarios select(String carnetUser) throws SQLException {
         Usuarios usuarios = null;
         //Establishing a connection
         try (Connection connection = getConnection();
@@ -53,7 +52,7 @@ public class UsuariosDAO implements iUsuarios {
     }
 
     @Override
-    public List<Usuarios> selectAll() {
+    public List<Usuarios> selectAll() throws SQLException {
         List<Usuarios> usuarios = new ArrayList<>();
         //Establishing a connection
         try (Connection connection = getConnection();
@@ -117,10 +116,10 @@ public class UsuariosDAO implements iUsuarios {
         boolean rowUpdated;
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USUARIOS);){
-            System.out.println("Updated Categoria: " + preparedStatement);
+            System.out.println("Updated user: " + preparedStatement);
             //Prepare query
             preparedStatement.setString(1, StringUtils.capitalize(usuarios.getNom_usuario().strip()));
-            preparedStatement.setString(2, StringUtils.capitalize( usuarios.getApe_usuario().strip()));
+            preparedStatement.setString(2, StringUtils.capitalize(usuarios.getApe_usuario().strip()));
             preparedStatement.setString(3, StringUtils.capitalize(usuarios.getTipo().strip()));
             preparedStatement.setString(4, usuarios.getTelcasa().strip());
             preparedStatement.setString(5, usuarios.getCelular().strip());
@@ -148,4 +147,35 @@ public class UsuariosDAO implements iUsuarios {
         }
         return rowDeleted;
     }
+
+    @Override
+    public boolean admin(String carnet, int estado) throws SQLException{
+        boolean rowUpdated;
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USUARIOS_ADMIN);){
+            System.out.println("Updated user: " + preparedStatement);
+            //Prepare query
+            preparedStatement.setInt(1, estado);
+            preparedStatement.setString(2, carnet);
+            //Check is there is any changes
+            rowUpdated = preparedStatement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    }
+
+    @Override
+    public boolean access(String carnet, int estado) throws SQLException{
+        boolean rowUpdated;
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USUARIOS_ACCESO);){
+            System.out.println("Updated user: " + preparedStatement);
+            //Prepare query
+            preparedStatement.setInt(1, estado);
+            preparedStatement.setString(2, carnet);
+            //Check is there is any changes
+            rowUpdated = preparedStatement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    }
+
 }

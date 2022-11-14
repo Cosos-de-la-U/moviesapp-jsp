@@ -1,10 +1,10 @@
 package Interfaces;
 
 import Model.Usuarios;
-import Enum.TipoUsuario;
+import Enum.SesionEnum;
+
+import java.sql.SQLException;
 
 public interface iLogin {
-    public Usuarios logIn(String carnet, String clave);
-    public TipoUsuario validate(Usuarios usuarios);
-    public void logOut(Usuarios usuarios);
+    public Usuarios logIn(String carnet, String clave) throws SQLException;
 }

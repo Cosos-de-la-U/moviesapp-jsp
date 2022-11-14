@@ -5,10 +5,10 @@
         <button @click="isOpen = !isOpen" class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
             <img src="https://avatars.dicebear.com/api/adventurer/Carlos.svg">
         </button>
-        <button x-show="isOpen" @click="isOpen = false" class="h-full w-full fixed inset-0 cursor-default"></button>
-        <div x-show="isOpen" class="absolute w-50 bg-white rounded-lg shadow-lg py-2 mt-16">
+        <button x-show="isOpen" @click="isOpen = false" class="object-cover h-full w-full fixed inset-0 cursor-default"></button>
+        <div x-show="isOpen" class="z-40 absolute w-50 bg-white rounded-lg shadow-lg py-2 mt-16">
             <a href="#" class="block px-4 py-2 account-link hover:text-white">Cuenta</a>
-            <a href="/logOut" class="block px-4 py-2 account-link hover:text-white">Cerrar Sesion</a>
+            <a href="http://localhost:8080/moviesapp_war_exploded/logout" class="block px-4 py-2 account-link hover:text-white">Cerrar Sesion</a>
         </div>
     </div>
 </header>

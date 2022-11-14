@@ -1,9 +1,9 @@
-<%@ include file="../../Common/head.jspf" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ include file="../../Common/General/head.jspf" %>
 <body class="bg-gray-100 font-family-karla flex">
-
-<%@ include file="../../Common/navigation.jspf" %>
+<%@ include file="../../Common/General/navigation.jspf" %>
 <div class="w-full flex flex-col h-screen overflow-y-hidden">
-    <%@ include file="../../Common/header.jspf" %>
+    <%@ include file="../../Common/General/header.jspf" %>
     <div class="w-full overflow-x-hidden border-t flex flex-col">
         <main class="w-full flex-grow p-6">
             <h1 class="text-3xl text-black pb-6">Dashboard</h1>

@@ -2,7 +2,7 @@ package DAO;
 
 import Interfaces.iLogin;
 import Model.Usuarios;
-import Enum.TipoUsuario;
+import Enum.SesionEnum;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +15,7 @@ import static DB.Queries.qUsuarios.SELECT_USUARIOS_LOGIN;
 
 public class LoginDAO implements iLogin {
     @Override
-    public Usuarios logIn(String carnetRequested, String claveRequested) {
+    public Usuarios logIn(String carnetRequested, String claveRequested) throws SQLException{
         Usuarios usuarioSession = null;
         //Establishing a connection
         try (Connection connection = getConnection();
@@ -47,21 +47,4 @@ public class LoginDAO implements iLogin {
         return usuarioSession;
     }
 
-    @Override
-    public TipoUsuario validate(Usuarios usuarioSession) {
-        if(usuarioSession.getAcessosistemas() == 1){
-            //Check if user is admin
-            if(usuarioSession.getEsadministrador() == 1){
-                return TipoUsuario.ADMIN;
-            }
-            //If is not is a normal user
-            return TipoUsuario.USUARIO;
-        }
-        return TipoUsuario.INHABILITADO;
-    }
-
-    @Override
-    public void logOut(Usuarios usuarios) {
-
-    }
 }

@@ -61,22 +61,22 @@ public class PeliculasController extends HttpServlet {
             throws SQLException, IOException, ServletException {
         List<Peliculas> listaPeliculas = peliculasDao.selectAll();
         request.setAttribute("listaPeliculas", listaPeliculas);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/View/Peliculas/peliculas.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/View/Peliculas/index.jsp");
         dispatcher.forward(request, response);
     }
 
     private void showNewFormPeliculas(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/View/Peliculas/peliculasForm.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/View/Peliculas/create.jsp");
         dispatcher.forward(request, response);
     }
 
     private void showEditFormPeliculas(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("idpeliculas"));
+        int id = Integer.parseInt(request.getParameter("idpelicula"));
         Peliculas existingPeliculas = peliculasDao.select(id);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/View/Peliculas/peliculasForm.jsp");
         request.setAttribute("peliculas", existingPeliculas);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/View/Peliculas/create.jsp");
         dispatcher.forward(request, response);
 
     }
@@ -95,7 +95,7 @@ public class PeliculasController extends HttpServlet {
 
     private void updatePeliculas(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
-        int idPeliculas = Integer.parseInt(request.getParameter("idpeliculas"));
+        int idPeliculas = Integer.parseInt(request.getParameter("idpelicula"));
         String nombre = request.getParameter("nombre");
         String nombreIngles = request.getParameter("nombreIngles");
         int yearp = Integer.parseInt(request.getParameter("yearp"));
@@ -108,7 +108,7 @@ public class PeliculasController extends HttpServlet {
 
     private void deletePeliculas(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
-        int id = Integer.parseInt(request.getParameter("idpeliculas"));
+        int id = Integer.parseInt(request.getParameter("idpelicula"));
         peliculasDao.delete(id);
         response.sendRedirect("listarPeliculas");
     }

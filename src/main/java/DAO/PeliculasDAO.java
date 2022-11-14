@@ -32,12 +32,12 @@ public class PeliculasDAO implements iPeliculas {
 
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
-                int idpeliculas = rs.getInt("idpeliculas");
+                int idpelicula = rs.getInt("idpelicula");
                 String nombre = rs.getString("nombre");
                 String nombreIngles = rs.getString("nomb_ingles");
                 int yearp = rs.getInt("yearp");
                 int duracion = rs.getInt("duracion");
-                peliculas = new Peliculas(idpeliculas, nombre, nombreIngles, yearp, duracion);
+                peliculas = new Peliculas(idpelicula, nombre, nombreIngles, yearp, duracion);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -60,12 +60,12 @@ public class PeliculasDAO implements iPeliculas {
 
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
-                int idpeliculas = rs.getInt("idpeliculas");
+                int idpelicula = rs.getInt("idpelicula");
                 String nombre = rs.getString("nombre");
                 String nombreIngles = rs.getString("nomb_ingles");
                 int yearp = rs.getInt("yearp");
                 int duracion = rs.getInt("duracion");
-                peliculas.add(new Peliculas(idpeliculas, nombre, nombreIngles, yearp, duracion));
+                peliculas.add(new Peliculas(idpelicula, nombre, nombreIngles, yearp, duracion));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -80,6 +80,9 @@ public class PeliculasDAO implements iPeliculas {
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PELICULAS)) {
             preparedStatement.setString(1, peliculas.getNombre());
+            preparedStatement.setString(2, peliculas.getNomb_ingles());
+            preparedStatement.setInt(3, peliculas.getYearp());
+            preparedStatement.setInt(4, peliculas.getDuracion());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

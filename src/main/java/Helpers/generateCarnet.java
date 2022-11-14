@@ -1,4 +1,4 @@
-package helper;
+package Helpers;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,6 @@ import java.util.Random;
 
 import static DB.PostgresDriver.getConnection;
 import static DB.Queries.qUsuarios.CHECK_CARNET;
-import static DB.Queries.qUsuarios.DELETE_USUARIOS;
 
 public class generateCarnet {
     public static String createCarnet(String nom_usuario, String ape_usuario) throws SQLException {

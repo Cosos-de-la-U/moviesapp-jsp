@@ -34,7 +34,6 @@ public class CategoriaController extends HttpServlet {
         try {
             switch (action) {
                 case "/categoria/nuevaCategoria":
-                    System.out.println("Not done");
                     showNewFormCategoria(request, response);
                     break;
                 case "/categoria/insertarCategoria":
@@ -61,13 +60,13 @@ public class CategoriaController extends HttpServlet {
             throws SQLException, IOException, ServletException {
         List<Categoria> listaCategoria = categoriaDao.selectAll();
         request.setAttribute("listaCategoria", listaCategoria);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/View/Categoria/peliculas.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/View/Categoria/index.jsp");
         dispatcher.forward(request, response);
     }
 
     private void showNewFormCategoria(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/View/Categoria/peliculasForm.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/View/Categoria/create.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -75,7 +74,7 @@ public class CategoriaController extends HttpServlet {
             throws SQLException, ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("idcategoria"));
         Categoria existingCategoria = categoriaDao.select(id);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/View/Categoria/peliculasForm.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/View/Categoria/create.jsp");
         request.setAttribute("categoria", existingCategoria);
         dispatcher.forward(request, response);
 

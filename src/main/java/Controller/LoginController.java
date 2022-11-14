@@ -2,8 +2,9 @@ package Controller;
 
 import DAO.LoginDAO;
 import Model.Usuarios;
-import Enum.TipoUsuario;
+import Enum.SesionEnum;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,39 +12,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
+
+import static Helpers.SessionChecker.checkSession;
 
 @WebServlet(name = "login", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
     private LoginDAO loginDAO;
 
-    public void init(){
+    public void init() {
         loginDAO = new LoginDAO();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
-        //Get paramethers
-        String carnet = request.getParameter("carnet");
-        String clave = request.getParameter("clave");
-        //Check if user exist
-        Usuarios usuarioSession = loginDAO.logIn(carnet, clave);
-        System.out.println(usuarioSession.getCarnet() + " " + usuarioSession.getNom_usuario() + " " + usuarioSession.getEsadministrador() +" " +usuarioSession.getClave());
-        //Validate and redirect
-        TipoUsuario usuarioTipo = loginDAO.validate(usuarioSession);
-        if (!usuarioTipo.equals(TipoUsuario.ADMIN)){
-            HttpSession session = request.getSession();
-            session.setAttribute("usuarioSession", usuarioSession);
-            response.sendRedirect("View/Admin/");
-            System.out.println("Entro");
-        }else {
-            System.out.println("No entro");
+
+        HttpSession session = request.getSession();
+        if (checkSession(session) == SesionEnum.NULA) {
+            try {
+                Usuarios usuarioSession = null;
+                //Get session
+                usuarioSession = loginDAO.logIn( request.getParameter("carnet"), request.getParameter("clave"));
+                session.setAttribute("usuarioSession", usuarioSession);
+                response.sendRedirect("/welcome");
+            } catch (SQLException e) {
+                //If it fails send msg
+                boolean errorLogin = true;
+                request.setAttribute("errorLogin", errorLogin);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+                dispatcher.forward(request, response);
+            }
         }
+        //If there is an available user
+        response.sendRedirect("/welcome");
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-    }
 }
